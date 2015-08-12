@@ -1,24 +1,27 @@
-dbdata:
-  image: mysql
-  volumes:
-    - '/var/lib/mysql'
 web:
   build: .
   volumes:
     - ./drupal:/var/www/html
   ports:
-    - 80:80
+    - "80:80"
   extra_hosts:
     - "axtel.local:127.0.0.1"
     - "new.axtel.local:127.0.0.1"
   links:
     - db
+
+dbdata:
+  image: busybox:latest
+  volumes:
+    - /var/lib/mysql
+  command: /bin/echo
+
 db:
   build: ./db
   volumes_from:
     - dbdata
   ports:
-    - 3306:3306
+    - "3306:3306"
   environment:
     MYSQL_ROOT_PASSWORD: root
     MYSQL_DATABASE: drupal
