@@ -30,3 +30,16 @@ db:
     MYSQL_DATABASE: drupal
     MYSQL_USER: drupal
     MYSQL_PASSWORD: drupal
+
+cli:
+  container_name: cli
+  build: cli/.
+  volumes:
+    - ./drupal:/var/www/html
+  ports:
+  ports:
+    - "9000:9000"
+  extra_hosts:
+  links:
+    - db
+    - web
